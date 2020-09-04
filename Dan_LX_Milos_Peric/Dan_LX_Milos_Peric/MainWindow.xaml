@@ -5,8 +5,87 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dan_LX_Milos_Peric"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="1220" Background="LightBlue">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width ="20" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height ="20" />
+            <RowDefinition Height ="auto" />
+            <RowDefinition Height ="auto" />
+            <RowDefinition Height ="auto" />
+            <RowDefinition Height ="auto" />
+            <RowDefinition Height ="auto" />
+            <RowDefinition Height ="*" />
+        </Grid.RowDefinitions>
+        <Button x:Name="addWorkerBtn" Content="Add Worker" Height="30" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="10" 
+                Command="{Binding AddNewWorker, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"></Button>
+        <DockPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="10" Margin="10,0,10,0" >
+            <DataGrid x:Name="myDataGrid" x:FieldModifier="public" ItemsSource="{Binding WorkerList, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding Worker, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
+                      AutoGenerateColumns="False" ColumnWidth="*" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" AlternatingRowBackground="LightGray" Background="#FF9B9B9B" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="Auto" TextOptions.TextFormattingMode="Ideal" Binding="{Binding WorkerID}"/>
+                    <DataGridTextColumn Header="First Name" Width="Auto" Binding="{Binding FirstName}"/>
+                    <DataGridTextColumn Header="Last Name" Width="Auto" Binding="{Binding LastName}"/>
+                    <DataGridTextColumn Header="Date of Birth" Width="Auto" Binding="{Binding DateOfBirth, StringFormat=d}"/>
+                    <DataGridTextColumn Header="ID number" Width="Auto" Binding="{Binding PersonalIDNumber}"/>
+                    <DataGridTextColumn Header="JMBG" Width="Auto" Binding="{Binding JMBG}"/>
+                    <DataGridTextColumn Header="Gender" Width="Auto" Binding="{Binding GenderName}"/>
+                    <DataGridTextColumn Header="Phone Number" Width="Auto" Binding="{Binding PhoneNumber}"/>
+                    <DataGridTextColumn Header="Sector" Width="auto" Binding="{Binding SectorName}"/>
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Location" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Address}"/>
+                                    <TextBlock Text=", "/>
+                                    <TextBlock Text="{Binding City}"/>
+                                    <TextBlock Text=", "/>
+                                    <TextBlock Text="{Binding Country}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Manager" Width="auto" Binding="{Binding Manager}"/>
+                    <DataGridTemplateColumn Width="auto">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Action" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button 
+                                    Command="{Binding Path=DataContext.DeleteWorker, RelativeSource= {RelativeSource FindAncestor,
+                                       AncestorType={x:Type DataGrid}},UpdateSourceTrigger=PropertyChanged}" Content="Delete" Margin="10,0,10,0" Background="Gray"/>
+                                    <Button
+                                    Command="{Binding Path=DataContext.EditWorker, RelativeSource= {RelativeSource FindAncestor,
+                                       AncestorType={x:Type DataGrid}},UpdateSourceTrigger=PropertyChanged}" Content="Edit" Margin="10,0,10,0" Background="Gray"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
     </Grid>
 </Window>
